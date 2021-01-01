@@ -19,26 +19,27 @@ ENV MYSQL_JDBC_VERSION 5.1.35
 
 WORKDIR /root
 
-RUN apt-get update -yqq \
-    && apt-get install -yqq \
-    curl \
-    netcat \
-    mysql-client \
-    && curl -sLk https://github.com/azkaban/azkaban/archive/$AZK_VERSION.tar.gz | tar xz \
+RUN curl -sLk https://github.com/azkaban/azkaban/archive/$AZK_VERSION.tar.gz | tar xz \
     && curl -sLk http://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-$MYSQL_JDBC_VERSION.tar.gz| tar xz \
     && mv mysql-connector-java-$MYSQL_JDBC_VERSION/mysql-connector-java-$MYSQL_JDBC_VERSION-bin.jar azkaban-web-$AZK_VERSION/extlib/ \
     && rm -rf mysql-connector-java-$MYSQL_JDBC_VERSION \
     && mkdir azkaban-web-$AZK_VERSION/logs/ \
     # Work around to run container as a daemon
-    && sed -i "s/&//" azkaban-web-$AZK_VERSION/bin/azkaban-web-start.sh \
-    && apt-get clean \
-    && rm -rf \
-    /var/lib/apt/lists/* \
-    /tmp/* \
-    /var/tmp/* \
-    /usr/share/man \
-    /usr/share/doc \
-    /usr/share/doc-base
+    && sed -i "s/&//" azkaban-web-$AZK_VERSION/bin/azkaban-web-start.sh
+
+#RUN apt-get update -yqq \
+#    && apt-get install -yqq \
+#    curl \
+#    netcat \
+#    mysql-client \
+#    && apt-get clean \
+#    && rm -rf \
+#    /var/lib/apt/lists/* \
+#    /tmp/* \
+#    /var/tmp/* \
+#    /usr/share/man \
+#    /usr/share/doc \
+#    /usr/share/doc-base
 
 ADD keystore azkaban-web-$AZK_VERSION/keystore
 ADD conf/azkaban.properties azkaban-web-$AZK_VERSION/conf/azkaban.properties
