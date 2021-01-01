@@ -19,13 +19,16 @@ ENV MYSQL_JDBC_VERSION 8.0.22
 
 WORKDIR /root
 
-RUN curl -sLk https://github.com/azkaban/azkaban/archive/$AZK_VERSION.tar.gz | tar xz \
-    && curl -sLk http://cdn.mysql.com/get/Downloads/Connector-J/mysql-connector-java-$MYSQL_JDBC_VERSION.tar.gz| tar xz \
-    && mv mysql-connector-java-$MYSQL_JDBC_VERSION/mysql-connector-java-$MYSQL_JDBC_VERSION-bin.jar azkaban-web-$AZK_VERSION/extlib/ \
-    && rm -rf mysql-connector-java-$MYSQL_JDBC_VERSION \
-    && mkdir azkaban-web-$AZK_VERSION/logs/ \
-    # Work around to run container as a daemon
-    && sed -i "s/&//" azkaban-web-$AZK_VERSION/bin/azkaban-web-start.sh
+RUN curl -sLk https://github.com/azkaban/azkaban/archive/$AZK_VERSION.tar.gz \
+    && curl -sLk http://cdn.mysql.com/get/Downloads/Connector-J/mysql-connector-java-$MYSQL_JDBC_VERSION.tar.gz 
+
+#RUN curl -sLk https://github.com/azkaban/azkaban/archive/$AZK_VERSION.tar.gz | tar xz \
+#    && curl -sLk http://cdn.mysql.com/get/Downloads/Connector-J/mysql-connector-java-$MYSQL_JDBC_VERSION.tar.gz| tar xz \
+#    && mv mysql-connector-java-$MYSQL_JDBC_VERSION/mysql-connector-java-$MYSQL_JDBC_VERSION-bin.jar azkaban-web-$AZK_VERSION/extlib/ \
+#    && rm -rf mysql-connector-java-$MYSQL_JDBC_VERSION \
+#    && mkdir azkaban-web-$AZK_VERSION/logs/ \
+#    # Work around to run container as a daemon
+#    && sed -i "s/&//" azkaban-web-$AZK_VERSION/bin/azkaban-web-start.sh
 
 #RUN apt-get update -yqq \
 #    && apt-get install -yqq \
