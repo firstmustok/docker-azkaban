@@ -15,12 +15,12 @@ ENV TERM linux
 ENV INITRD No
 
 ENV AZK_VERSION 3.90.0
-ENV MYSQL_JDBC_VERSION 5.1.35
+ENV MYSQL_JDBC_VERSION 8.0.22
 
 WORKDIR /root
 
 RUN curl -sLk https://github.com/azkaban/azkaban/archive/$AZK_VERSION.tar.gz | tar xz \
-    && curl -sLk http://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-$MYSQL_JDBC_VERSION.tar.gz| tar xz \
+    && curl -sLk http://cdn.mysql.com/get/Downloads/Connector-J/mysql-connector-java-$MYSQL_JDBC_VERSION.tar.gz| tar xz \
     && mv mysql-connector-java-$MYSQL_JDBC_VERSION/mysql-connector-java-$MYSQL_JDBC_VERSION-bin.jar azkaban-web-$AZK_VERSION/extlib/ \
     && rm -rf mysql-connector-java-$MYSQL_JDBC_VERSION \
     && mkdir azkaban-web-$AZK_VERSION/logs/ \
