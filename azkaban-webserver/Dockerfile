@@ -6,7 +6,7 @@
 # SOURCE: https://github.com/puckel/docker-azkaban
 
 FROM java:8
-MAINTAINER Puckel_
+MAINTAINER runshu
 
 # Never prompts the user for choices on installation/configuration of packages
 ENV DEBIAN_FRONTEND noninteractive
@@ -14,7 +14,7 @@ ENV TERM linux
 # Work around initramfs-tools running on kernel 'upgrade': <http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=594189>
 ENV INITRD No
 
-ENV AZK_VERSION 2.5.0
+ENV AZK_VERSION 3.90.0
 ENV MYSQL_JDBC_VERSION 5.1.35
 
 WORKDIR /root
@@ -24,7 +24,7 @@ RUN apt-get update -yqq \
     curl \
     netcat \
     mysql-client \
-    && curl -sLk https://s3.amazonaws.com/azkaban2/azkaban2/$AZK_VERSION/azkaban-web-server-$AZK_VERSION.tar.gz| tar xz \
+    && curl -sLk https://github.com/azkaban/azkaban/archive/$AZK_VERSION.tar.gz | tar xz \
     && curl -sLk http://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-$MYSQL_JDBC_VERSION.tar.gz| tar xz \
     && mv mysql-connector-java-$MYSQL_JDBC_VERSION/mysql-connector-java-$MYSQL_JDBC_VERSION-bin.jar azkaban-web-$AZK_VERSION/extlib/ \
     && rm -rf mysql-connector-java-$MYSQL_JDBC_VERSION \
@@ -52,3 +52,4 @@ ADD script/run.sh run.sh
 RUN chmod +x run.sh
 
 CMD ["./run.sh"]
+
